@@ -1,0 +1,27 @@
+﻿body{
+	background-color: #F0F0F0;
+}
+div{
+	background-color: #FAFAFA;
+	width: 400px;
+	border: 1px solid #000000;
+	margin: 5px;
+}
+p{
+	margin: 3px;
+}
+h1, h2, h3, h4, h5, h6{
+	text-align: center;
+	background-color: #F8F8F8;
+	background-color: #F8F8F8;
+	text-shadow: #000000 0px 0px 5px;
+	margin: 5px;
+	width: 250px;
+	border-bottom: 1px solid #000000;
+	border-top:  1px solid #000000;
+	border-right: 1px solid #000000;
+}
+li{
+	//list-style: [disc|circle|square|decimal|none] [outside|inside] [url("адрес пиктограммы") ];
+	list-style: square;
+}
