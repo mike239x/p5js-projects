@@ -9,7 +9,9 @@ The repository contains:
 2. A file called `server.sh` to host a simple local server,
  this requires Python3 to run.
  I don't know if it works on Windows.
-3. Lots of other folders with projects.
-4. `.gitignore` - insludes folders `testing` and `SORT THIS`.
+3. `index.html` the main website containing links to project folders
+ (currently under development).
+4. Project folders.
+5. `.gitignore` - includes folders `testing` and `SORT THIS`.
 
 Inspired by The Coding Train YouTube channel.
