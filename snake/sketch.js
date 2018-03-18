@@ -19,6 +19,11 @@ var head = {
     x : 0,
     y : 0
 }
+var myFont;
+
+function preload() {
+    myFont = loadFont('../fonts/handwritten/discover-earth/font.ttf');
+}
 
 function restartGame() {
     for (let x = 0; x < fieldWigth; x++)
@@ -72,6 +77,7 @@ function draw() {
     switch (gameState) {
         case -1: // game just started
             push();
+            textFont(myFont);
             translate(WIDTH/2, HEIGHT/2);
             background(COLOR.DARKGRAY);
             stroke(COLOR.ORANGE);
