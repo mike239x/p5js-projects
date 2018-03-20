@@ -58,9 +58,28 @@ function setup() {
     s = `All your BASE \nbelong to us.`;
     text(s,0,0);
     pop();
+    push();
+    applyMatrix(2.5,0,0,1,0,HEIGHT*0.5);
+    textFont(myFont, fontSize);
+    s = `test pls`;
+    drawWord(s,3,myFont);
+    pop();
 
 }
 
+function drawWord(w, margin, f) {
+    // var x = 0;
+    //TODO rewrite this function so that
+    // it returns X position at the end of the word drawn
+    push();
+    for (let e of w) {
+        var b = f.textBounds(e,0,0);
+        translate(margin-b.x,0);
+        text(e,0,0);
+        translate(b.w+b.x,0);
+    }
+    pop();
+}
 
 function draw() {
 }
