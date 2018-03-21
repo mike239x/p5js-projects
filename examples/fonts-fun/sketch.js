@@ -9,8 +9,8 @@ var COLOR = {
 var myFont, normalFont, fontSize;
 
 function preload() {
-    myFont = loadFont('../fonts/handwritten/discover-earth/DiscoverEarth.ttf');
-    normalFont = loadFont('../fonts/various/dreaming-castle/DreamingCastle.ttf');
+    myFont = loadFont('../../fonts/handwritten/discover-earth/DiscoverEarth.ttf');
+    normalFont = loadFont('../../fonts/various/dreaming-castle/DreamingCastle.ttf');
 }
 
 function setup() {
