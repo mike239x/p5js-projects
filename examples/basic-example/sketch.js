@@ -24,6 +24,7 @@ function setup() {
         x : 1, y : 2
     };
     myDoggy = new Doggy(1,2);
+    alert('Finished setup!');
 }
 
 function draw() {
