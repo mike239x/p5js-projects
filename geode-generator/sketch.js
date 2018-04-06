@@ -9,21 +9,24 @@ function setup () {
   HEIGHT = windowHeight;
   size = min(WIDTH,HEIGHT)/2 - 100;
   createCanvas(WIDTH,HEIGHT);
-  translate(WIDTH/2, HEIGHT/2);
-  stroke(0);
+  cookGeode();
+}
 
+function mouseClicked() {
+  cookGeode();
+}
+
+function cookGeode(){
+  translate(WIDTH/2, HEIGHT/2);
   chooseColorSheme();
   generateBorder();
   generateLayers();
   addSomeDots();
-
   for (let i = layers.length; i > 0; i--) {
     let l = layers[i-1];
     drawLayer(l.depth, l.width, l.color);
   }
-
   removeOutsides(color(255),color(0));
-
 }
 
 //depth, width, color
