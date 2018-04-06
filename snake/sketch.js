@@ -45,7 +45,7 @@ var len;
 
 
 function preload() {
-    myFont = loadFont('../fonts/handwritten/love-and-trust/LoveAndTrust.ttf');
+    myFont = loadFont('../fonts/monospaced/SVBasicManual/SVBasicManual.ttf');
 }
 
 function restartGame() {
@@ -57,16 +57,25 @@ function restartGame() {
     head.x = floor(random(fieldWidth*2/3))+1;
     head.y = floor(random(fieldHeight));
     field[head.x][head.y] = 2;
-    field[head.x-1][head.y] = 2;
+    field[head.x-1][head.y] = 1;
 }
 
 function setup() {
-    // boxSize = 40;
     createCanvas(WIDTH,HEIGHT);
     frameRate(10);
     gameState = -1; // starting screen
     background(250,0,0);
-    textFont(myFont, 32);
+    textFont(myFont, boxSize);
+    prepareWelcomeScreen();
+}
+
+function prepareWelcomeScreen() {
+    field[0][0] = 1;
+    field[0][1] = 2;
+    field[0][2] = 3;
+    len = 3;
+    field[0][4] = -1;
+    field[0][6] = -2;
 }
 
 function drawTile(type) {
@@ -105,44 +114,61 @@ function drawTile(type) {
     pop();
 }
 
+function drawField() {
+    for (let x = 0; x < fieldWidth; x++) {
+        for (let y = 0; y < fieldHeight; y++) {
+            push();
+            translate(x*boxSize,y*boxSize);
+            drawTile(field[x][y]);
+            pop();
+        }
+    }
+}
+
 function draw() {
+    var lines;
+    const r = boxSize;
     switch (gameState) {
         case -1: // game just started
-            background(COLOR.DARKGRAY);
-            push();
-            translate(WIDTH/2, HEIGHT/2);
+            drawField();
+            lines = [
+                'Welcome to NEON-SNAKE',
+                'Use WASD to control the snake',
+                'Eat any many cyber-apples as you can',
+                'Avoid corrupted cyber-apples',
+                'Press ENTER to start'
+            ];
             stroke(COLOR.ORANGE);
             fill(COLOR.ORANGE);
-            textAlign(CENTER);
-            text('This is welcome screen.\n\
-                Use WASD to move around.\n\
-                Press ENTER to start.',0,-16);
-            pop();
+            text(lines[0],2*r,r);
+            text(lines[1],2*r,3*r);
+            text(lines[2],2*r,5*r);
+            text(lines[3],2*r,7*r);
+            text(lines[4],2*r,9*r);
             break;
-        case 1: // end of the game screen
-            // background(COLOR.DARKGRAY);
-            // push();
-            // translate(WIDTH/2, HEIGHT/2);
-            // stroke(COLOR.ORANGE);
-            // fill(COLOR.ORANGE);
-            // textAlign(CENTER);
-            // text(`You ate ${(len-1)} cyber-apples. Well done!\n\
-            //     Press ENTER to restart.`,0,-16);
-            // pop();
+        case 1:
+            const myColor = COLOR.DARKGRAY.slice();
+            myColor[3] = 10;
+            fill(myColor);
+            noStroke();
+            rect(0,0,WIDTH,HEIGHT);
+            lines = [
+                `You ate ${(len-2)} cyber-apples`,
+                'Well done',
+                'Press ENTER to restart'
+            ];
+            stroke(COLOR.ORANGE);
+            fill(COLOR.ORANGE);
+            text(lines[0],2*r,r);
+            text(lines[1],2*r,3*r);
+            text(lines[2],2*r,5*r);
             break;
         default: // playing
             handlePressedKeys();
             moveSnake();
             releaseKeys();
             generateDrops();
-            for (let x = 0; x < fieldWidth; x++) {
-                for (let y = 0; y < fieldHeight; y++) {
-                    push();
-                    translate(x*boxSize,y*boxSize);
-                    drawTile(field[x][y]);
-                    pop();
-                }
-            }
+            drawField();
     }
 }
 function generateDrops() {
