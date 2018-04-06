@@ -22,13 +22,6 @@ function setup () {
 
   removeOutsides(color(255),color(0));
 
-  // highlight border points:
-  // stroke(0);
-  // strokeWeight(3);
-  // for (let b of border) {
-  //   point(b.x,b.y);
-  // }
-
 }
 
 //depth, width, color
@@ -36,15 +29,13 @@ function drawLayer(d, w, col) {
   stroke(col);
 
   strokeWeight(d+w);
+  noFill();
+  strokeJoin(ROUND);
+  beginShape();
   for (let b of border) {
-    point(b.x,b.y);
+    vertex(b.x,b.y);
   }
-  // noFill();
-  // beginShape();
-  // for (let b of border) {
-  //   vertex(b.x,b.y);
-  // }
-  // endShape(CLOSE);
+  endShape(CLOSE);
   for (let p of dots) {
     if (p.depth < d) {
       strokeWeight(d - p.depth);

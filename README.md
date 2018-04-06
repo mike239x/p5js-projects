@@ -26,3 +26,4 @@ Here is the list of all the links, I'll try to keep it updated:
 2. [tic-tac-toe](https://mike239x.github.io/p5js-projects/tic-tac-toe/)
 3. [snake](https://mike239x.github.io/p5js-projects/snake/)
 4. [flocking sim](https://mike239x.github.io/p5js-projects/flocking/)
+5. [geode-generator](https://mike239x.github.io/p5js-projects/geode-generator)
