@@ -2,6 +2,7 @@ let border;
 let layers;
 let dots;
 let WIDTH, HEIGHT;
+let chooseColor;
 
 function setup () {
   WIDTH = windowWidth;
@@ -11,6 +12,7 @@ function setup () {
   translate(WIDTH/2, HEIGHT/2);
   stroke(0);
 
+  chooseColorSheme();
   generateBorder();
   generateLayers();
   addSomeDots();
@@ -28,7 +30,7 @@ function setup () {
 function drawLayer(d, w, col) {
   stroke(col);
 
-  strokeWeight(d+w);
+  strokeWeight(2*(d+w));
   noFill();
   strokeJoin(ROUND);
   beginShape();
@@ -38,7 +40,7 @@ function drawLayer(d, w, col) {
   endShape(CLOSE);
   for (let p of dots) {
     if (p.depth < d) {
-      strokeWeight(d - p.depth);
+      strokeWeight(2*(d - p.depth));
       point(p.x,p.y);
     }
   }
@@ -62,6 +64,19 @@ function removeOutsides(bg, s) {
   endShape(CLOSE);
 }
 
+function chooseColorSheme() {
+  const mainColor = color(random(0,255),random(0,255),random(0,255));
+  const black = color(0);
+  const white = color(255);
+  chooseColor = function () {
+    if (random(0,1) < 0.5) {
+      return lerpColor(mainColor,black,random(0,0.8));
+    } else {
+      return lerpColor(mainColor,white,random(0,0.8));
+    }
+  }
+}
+
 function generateBorder() {
   border = [];
   for (let i = 0; i < TWO_PI; i += PI / 100) {
@@ -75,15 +90,12 @@ function generateBorder() {
 function generateLayers() {
   layers = [];
   let d = 0;
-  // in theory d < size should be enough,
-  //but for some wierd reasons it doesn't work
-  while (d < 2*size) {
-    let w = randomGaussian(6,1);
+  while (d < size) {
+    let w = randomGaussian(4,1);
     layers.push({
       depth : d,
       width : w,
-      //random goes only to 200 so that no mega-toxic colors appear
-      color : color(random(0,200),random(0,200),random(0,200))
+      color : chooseColor()
     });
     d+=w;
   }
@@ -104,7 +116,7 @@ function addSomeDots() {
     for (let i = 0; i < n; i++) {
       let x = randomGaussian(cx,30);
       let y = randomGaussian(cy,30);
-      let d = size-dist(0,0,x,y);
+      let d = size-dist(0,0,x,y)-30;
       dots.push({
         x : x,
         y : y,
