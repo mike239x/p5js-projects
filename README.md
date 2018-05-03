@@ -27,4 +27,5 @@ Here is the list of all the links, I'll try to keep it updated:
 3. [snake](https://mike239x.github.io/p5js-projects/snake/)
 4. [flocking sim](https://mike239x.github.io/p5js-projects/flocking/)
 5. [geode-generator](https://mike239x.github.io/p5js-projects/geode-generator)
-6. [my-notepad](https://mike239x.github.io/p5js-projects/my-notepad)
+6. [sity-landscape-generator](https://mike239x.github.io/p5js-projects/night-city)
+7. [my-notepad](https://mike239x.github.io/p5js-projects/my-notepad)
