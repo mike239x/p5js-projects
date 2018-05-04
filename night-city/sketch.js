@@ -1,26 +1,35 @@
 const WIDTH = 600;
 const HEIGHT = 400;
 
-let leftEdge = 0;
-let rightEdge = 600;
-let maxHeight = 400;
+// Boundaries for buildings
+const leftEdge = 0;
+const rightEdge = 600;
+const maxHeight = 250;
+const minWidth = 50;
+const minHeight = 50;
+// Depth of the ground, in pixels
+const ground = 50;
+
 const LEFT = 0;
 const RIGHT = 1;
+const EMPTY = 0;
+
+let debugging = false;
+
+let drawing = false;
+let startX, startY;
 
 let buildings;
 function createBuildings() {
   buildings = [];
   for (let i = 0; i < 10; i++) {
     let b = {};
-    // TODO: mb round those up?
-    b.left = random(leftEdge, rightEdge);
-    b.right = random(leftEdge, rightEdge);
-    if (b.left > b.right) {
-        let tmp = b.left;
-        b.left = b.right;
-        b.right = tmp;
+    while(true) {
+      b.left = round(random(leftEdge, rightEdge));
+      b.right = round(random(leftEdge, rightEdge));
+      b.top = round(random(minHeight,maxHeight));
+      if (b.right - b.left >= minWidth) break;
     }
-    b.top = random(0,maxHeight);
     buildings.push(b);
   }
 }
@@ -30,7 +39,7 @@ function createSides() {
   function cmp(sideA, sideB) {
     if (sideA.x < sideB.x) return -1;
     if (sideA.x > sideB.x) return 1;
-    // If two buildings are next to eachother, sharing one side,
+    // If two buildings are next to each other, sharing one side,
     // we first add left side of right building, when right side of the left
     // building, so the gap between those will not be seen.
     if (sideA.side == LEFT && sideB.side == RIGHT) return 1;
@@ -77,60 +86,137 @@ function topRoof() {
 }
 
 function drawBuildings() {
-  fill(0,0,0,50);
-  stroke(0);
-  strokeWeight(1);
-  for (let b of buildings) rect(b.left,0,b.right-b.left,b.top);
+  if (debugging) {
+    fill(255,255,255,50);
+    stroke(255);
+    strokeWeight(1);
+    for (let b of buildings) rect(b.left,0,b.right-b.left,b.top);
+  } else {
+    // Some dumb work around for keeping random thins random
+    // while having the windows only appear to be randomly on/off
+    let seed = round(random(0,1000000));
+    randomSeed(239);
+    fill(0);
+    noStroke();
+    for (let b of buildings) {
+      rect(b.left,0,b.right-b.left,b.top);
+      // TODO: draw windows
+    }
+    randomSeed(seed);
+  }
 }
 
 function drawBuildingsCountour() {
-  // console.log('a');
   noFill();
-  stroke(255,0,0); // red
-  strokeWeight(3);
-  // console.log('b');
+  if (debugging) {
+    stroke(255,0,0); // red
+    strokeWeight(3);
+  } else {
+    stroke(255); // white outline
+    strokeWeight(1);
+  }
   createSides();
-  // console.log('c');
   createRoofs();
-  // console.log('d');
   let n = sides.length;
-  // console.log('e', n);
   beginShape();
   vertex(leftEdge, 0);
   for (let i = 0; i < n; i++) {
     let side = sides.pop();
     vertex(side.x, topRoof());
-    console.log(side);
     handleSide(side);
     vertex(side.x, topRoof());
   }
   vertex(rightEdge, 0);
   endShape();
-  // console.log('f');
+}
+
+function drawGround() {
+  fill(0);
+  noStroke();
+  rect(0,0,WIDTH-1,-ground);
+}
+
+function drawScene() {
+  push();
+  // translate(0, HEIGHT-ground);
+  applyMatrix(1,0,0,-1,0,HEIGHT-ground);
+  background(0);
+  if (!debugging) {
+    // TODO: draw night sky, with stars and the moon
+  }
+  drawGround();
+  drawBuildings();
+  drawBuildingsCountour();
+  pop();
 }
 
 function setup() {
-  createCanvas(WIDTH, HEIGHT);
-  // console.log('1');
+  let canvas = createCanvas(WIDTH, HEIGHT);
+  canvas.mousePressed(() => {
+    if (mouseY >= HEIGHT - ground) {
+      drawing = true;
+      startX = mouseX;
+      startY = HEIGHT - ground;
+    }
+  });
+  // canvas.mouseDragged();
+  canvas.mouseReleased(() => {
+    if (drawing && mouseY < HEIGHT - ground) {
+      buildings.push({
+        left : min(mouseX, startX),
+        right : max(mouseX, startX),
+        top : startY - mouseY
+      });
+      drawing = false;
+    }
+  });
   createBuildings();
-  // console.log('2');
-  background(255);
-  drawBuildings();
-  // console.log('3');
-  drawBuildingsCountour();
-  // console.log('4');
+  drawScene();
+
+  createElement('br');
+  let resetButton = createButton('reset');
+  resetButton.mousePressed(createBuildings);
+  let undoButton = createButton('undo');
+  undoButton.mousePressed(() => {
+    if (buildings != EMPTY) buildings.pop();
+  });
+  let eraseButton = createButton('erase all');
+  eraseButton.mousePressed(() => {
+    buildings = [];
+  });
+
+  let beautyCheckbox = createCheckbox('beauty mode', true);
+  beautyCheckbox.changed(() => {
+    debugging = !beautyCheckbox.checked();
+  });
+
+  createElement('br');
+  createDiv('To create a new building start dragging a rectangle from underground.');
+  createDiv('Undo button only deletes the last created building, so it can not undo "reset" or "erase all" buttons.');
+
 }
 
+function highlightPoint(px,py) {
+  stroke(255);
+  strokeWeight(1);
+  beginShape(LINES);
+  for (let x = 0, y = py; x <= WIDTH; x += 10) vertex(x,y);
+  endShape();
+  let x = px, y = 0;
+  beginShape(LINES);
+  for (let x = px, y = 0; y <= HEIGHT; y += 10) vertex(x,y);
+  endShape();
+}
 
 function draw() {
-
+  drawScene();
+  if (drawing) {
+    highlightPoint(startX, startY);
+    highlightPoint(mouseX, min(HEIGHT-ground,mouseY));
+  }
 }
 
-function mouseClicked() {
-  setup();
-}
-
-// TODO: add dragAndDrop to create new buildings
+//-----------------------------------------------------------------------------
 
 // This is a min-heap, so given the standard cmp function with cmp(a,b) = a-b
 // and integers it will have element with minimal value on top.
