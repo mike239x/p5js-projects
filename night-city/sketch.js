@@ -1,11 +1,19 @@
 const WIDTH = 600;
 const HEIGHT = 400;
 
+let moon;
+let bg;
+function preload() {
+    moon = loadImage('moon.png');
+    bg = loadImage('stars.jpg');
+}
+
 // Boundaries for buildings
 const leftEdge = 0;
 const rightEdge = 600;
-const maxHeight = 250;
+const maxHeight = 200;
 const minWidth = 50;
+const maxWidth = 200;
 const minHeight = 50;
 // Depth of the ground, in pixels
 const ground = 50;
@@ -22,13 +30,13 @@ let startX, startY;
 let buildings;
 function createBuildings() {
   buildings = [];
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 5; i++) {
     let b = {};
     while(true) {
       b.left = round(random(leftEdge, rightEdge));
       b.right = round(random(leftEdge, rightEdge));
       b.top = round(random(minHeight,maxHeight));
-      if (b.right - b.left >= minWidth) break;
+      if (minWidth <= b.right - b.left  &&  b.right - b.left <= maxWidth) break;
     }
     buildings.push(b);
   }
@@ -92,15 +100,43 @@ function drawBuildings() {
     strokeWeight(1);
     for (let b of buildings) rect(b.left,0,b.right-b.left,b.top);
   } else {
+    // Drawing buildings and windows in them. Tasty spagetti code
     // Some dumb work around for keeping random thins random
     // while having the windows only appear to be randomly on/off
-    let seed = round(random(0,1000000));
+    const seed = round(random(0,1000000));
+    const minRoomW = 10;
+    const minRoomH = 12;
+    const margin = 3.5;
+    const m = margin;
     randomSeed(239);
     fill(0);
     noStroke();
     for (let b of buildings) {
-      rect(b.left,0,b.right-b.left,b.top);
-      // TODO: draw windows
+      push();
+      translate(b.left,0);
+      let w = b.right-b.left;
+      let h = b.top;
+      rect(0,0,w,h);
+      let cols = floor(w / minRoomW);
+      let rows = floor(h / minRoomH);
+      let roomW = w / cols;
+      let roomH = h / rows;
+      noStroke();
+      for (let i = 0; i < rows; i++) {
+        push();
+        for (let j = 0; j < cols; j++) {
+          if (random(0,1) < 0.9) {
+            fill(255, 241, 224);
+          } else {
+            noFill();
+          }
+          rect(m,m,roomW-2*m,roomH-2*m);
+          translate(roomW,0);
+        }
+        pop();
+        translate(0,roomH);
+      }
+      pop();
     }
     randomSeed(seed);
   }
@@ -112,6 +148,7 @@ function drawBuildingsCountour() {
     stroke(255,0,0); // red
     strokeWeight(3);
   } else {
+    // noStroke();
     stroke(255); // white outline
     strokeWeight(1);
   }
@@ -136,14 +173,22 @@ function drawGround() {
   rect(0,0,WIDTH-1,-ground);
 }
 
+function drawBG() {
+  // draw night sky, with stars and the moon
+  if (debugging) {
+    background(0);
+  } else {
+    background(0);
+    image(bg,0,0,WIDTH,HEIGHT);
+    image(moon, 20,20,100,100);
+  }
+}
+
 function drawScene() {
   push();
   // translate(0, HEIGHT-ground);
+  drawBG();
   applyMatrix(1,0,0,-1,0,HEIGHT-ground);
-  background(0);
-  if (!debugging) {
-    // TODO: draw night sky, with stars and the moon
-  }
   drawGround();
   drawBuildings();
   drawBuildingsCountour();
@@ -167,8 +212,8 @@ function setup() {
         right : max(mouseX, startX),
         top : startY - mouseY
       });
-      drawing = false;
     }
+    drawing = false;
   });
   createBuildings();
   drawScene();
