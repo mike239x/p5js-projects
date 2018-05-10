@@ -3,9 +3,11 @@ const HEIGHT = 400;
 
 let moon;
 let bg;
+let windows;
 function preload() {
     moon = loadImage('moon.png');
     bg = loadImage('stars.jpg');
+    windows = loadImage('windows.png');
 }
 
 // Boundaries for buildings
@@ -100,45 +102,16 @@ function drawBuildings() {
     strokeWeight(1);
     for (let b of buildings) rect(b.left,0,b.right-b.left,b.top);
   } else {
-    // Drawing buildings and windows in them. Tasty spagetti code
-    // Some dumb work around for keeping random thins random
-    // while having the windows only appear to be randomly on/off
-    const seed = round(random(0,1000000));
-    const minRoomW = 10;
-    const minRoomH = 12;
-    const margin = 3.5;
-    const m = margin;
-    randomSeed(239);
-    fill(0);
-    noStroke();
+    // Drawing buildings and windows in them
+    stroke(26,29,34);
+    strokeWeight(4);
+    noFill();
     for (let b of buildings) {
-      push();
-      translate(b.left,0);
       let w = b.right-b.left;
       let h = b.top;
-      rect(0,0,w,h);
-      let cols = floor(w / minRoomW);
-      let rows = floor(h / minRoomH);
-      let roomW = w / cols;
-      let roomH = h / rows;
-      noStroke();
-      for (let i = 0; i < rows; i++) {
-        push();
-        for (let j = 0; j < cols; j++) {
-          if (random(0,1) < 0.9) {
-            fill(255, 241, 224);
-          } else {
-            noFill();
-          }
-          rect(m,m,roomW-2*m,roomH-2*m);
-          translate(roomW,0);
-        }
-        pop();
-        translate(0,roomH);
-      }
-      pop();
+      image(windows, b.left,0,w,h, b.left,0,w,h);
+      rect(b.left+1,1,w-2,h-2);
     }
-    randomSeed(seed);
   }
 }
 
@@ -148,7 +121,6 @@ function drawBuildingsCountour() {
     stroke(255,0,0); // red
     strokeWeight(3);
   } else {
-    // noStroke();
     stroke(255); // white outline
     strokeWeight(1);
   }
@@ -168,7 +140,7 @@ function drawBuildingsCountour() {
 }
 
 function drawGround() {
-  fill(0);
+  fill(15);
   noStroke();
   rect(0,0,WIDTH-1,-ground);
 }
@@ -186,7 +158,6 @@ function drawBG() {
 
 function drawScene() {
   push();
-  // translate(0, HEIGHT-ground);
   drawBG();
   applyMatrix(1,0,0,-1,0,HEIGHT-ground);
   drawGround();
