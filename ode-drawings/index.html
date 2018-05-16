@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport"
+    width=device-width,
+    initial-scale=1.0,
+    maximum-scale=1.0,
+    user-scalable=0,
+    charset="utf-8"/>
+<style> body {padding: 0; margin: 0;} </style>
+<script src="../libs/p5.min.js"></script>
+<script src="../libs/p5.dom.min.js"></script>
+<script src="../libs/p5.sound.min.js"></script>
+<script src="../libs/jquery-3.3.1.min.js"></script>
+<script src="sketch.js"></script>
+</head>
+<body>
+  <div id = "canvas placeholder"></div>
+  <div id = "buttons"></div>
+
+  <span id = 'formula'>
+  formula:<br>
+  f' = <input placeholder="f-x" type="text">
+  <!-- <textarea rows="4" cols="50" placeholder="f' = f - x" style="resize: none;"></textarea> -->
+  </span>
+
+  <span id = 'settings'>
+    edges: <br>
+    X-axis sides: <input placeholder="-1.5 1.5" type="text"><br>
+    Y-axis sides: <input placeholder="-1 1" type="text"><br>
+    <input id="1:1" type="checkbox" checked><label for="1:1">1:1</label>
+    gridstep on X-axis: <input placeholder="0.25" type="text"><br>
+    gridstep on Y-axis: <input placeholder="0.25" type="text">
+  </span>
+
+  <span id = 'extra settings'>
+    <input placeholder="600" style="display: block;" type="text"><br>
+    <input placeholder="600" style="display: block;" type="text">
+  </span>
+
+  <span id = 'instructions'>
+    some text here describing how to work this thing
+  </span>
+
+</body>
+</html>
