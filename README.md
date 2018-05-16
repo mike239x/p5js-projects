@@ -20,12 +20,12 @@ Inspired by The Coding Train YouTube channel.
 This repo also has its own github page, meaning you can test provided javascript
 apps just by going to
 `https://mike239x.github.io/p5js-projects/the-folder-you-need`.
-Here is the list of all the links, I'll try to keep it updated:
-1. [basic example](https://mike239x.github.io/p5js-projects/examples/basic-example/)
- and [fonts fun](https://mike239x.github.io/p5js-projects/examples/fonts-fun/)
-2. [tic-tac-toe](https://mike239x.github.io/p5js-projects/tic-tac-toe/)
-3. [snake](https://mike239x.github.io/p5js-projects/snake/)
-4. [flocking sim](https://mike239x.github.io/p5js-projects/flocking/)
-5. [geode-generator](https://mike239x.github.io/p5js-projects/geode-generator)
-6. [sity-landscape-generator](https://mike239x.github.io/p5js-projects/night-city)
-7. [my-notepad](https://mike239x.github.io/p5js-projects/my-notepad)
+Here is the list of some links, I'll try to keep it updated:
+1. [tic-tac-toe](https://mike239x.github.io/p5js-projects/tic-tac-toe/)
+2. [snake](https://mike239x.github.io/p5js-projects/snake/)
+3. [flocking sim](https://mike239x.github.io/p5js-projects/flocking/)
+4. [geode-generator](https://mike239x.github.io/p5js-projects/geode-generator)
+5. [sity-landscape-generator](https://mike239x.github.io/p5js-projects/night-city)
+6. [my-notepad](https://mike239x.github.io/p5js-projects/my-notepad)
+7. [ODE-painter](https://mike239x.github.io/p5js-projects/ode-drawings)
+    This one is still in development.
