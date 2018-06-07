@@ -26,6 +26,8 @@ Here is the list of some links, I'll try to keep it updated:
 3. [flocking sim](https://mike239x.github.io/p5js-projects/flocking/)
 4. [geode-generator](https://mike239x.github.io/p5js-projects/geode-generator)
 5. [sity-landscape-generator](https://mike239x.github.io/p5js-projects/night-city)
-6. [my-notepad](https://mike239x.github.io/p5js-projects/my-notepad)
-7. [ODE-painter](https://mike239x.github.io/p5js-projects/ode-drawings)
+6. [travelling-salesman](https://mike239x.github.io/p5js-projects/travelling-salesman)
+7. [my-notepad](https://mike239x.github.io/p5js-projects/my-notepad)
+  This one is still in development (?).
+8. [ODE-painter](https://mike239x.github.io/p5js-projects/ode-drawings)
     This one is still in development.
