@@ -69,7 +69,7 @@ function modifyPath() {
     let J = cities[path[j]];
     let B = (j === path.length - 1) ? cities[path[0]] : cities[path[j+1]];
     let delta = d(A,I) + d(J,B) - d(A,J) - d(I,B);
-    if (random(0,1) < exp(delta/step)) {
+    if (random(0,1) < exp(delta*step)) {
       tmp = path.splice(i,j-i+1);
       reverse(tmp);
       tail = path.splice(i);
