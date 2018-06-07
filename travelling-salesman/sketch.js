@@ -82,7 +82,11 @@ function modifyPath() {
 function draw() {
   modifyPath();
 
-  background(255);
+  fill(255);
+  stroke(200);
+  strokeWeight(1);
+  rect(0,0,WIDTH-1,HEIGHT-1);
+
   noFill();
   stroke(200);
   strokeWeight(2);
