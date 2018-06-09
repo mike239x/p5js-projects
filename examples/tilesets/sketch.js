@@ -5,14 +5,16 @@ let _ = undefined;
 let rules;
 
 let debug = false;
+let pencil;
 
 function preload() {
-  mytiledmap = new Tilemap('pencil.png', 64, 10, 7);
+  pencil = loadImage('pencil.png');
 }
 
 let canvas;
 
 function setup() {
+    mytiledmap = new Tilemap(pencil, 64, 10, 7);
 
     mymap = new Map(10,7);
     // mymap.load([

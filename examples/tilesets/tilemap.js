@@ -15,28 +15,22 @@ class Tilemap {
       x : -0.5,
       y : -0.5
     };
-    this.tileset = loadImage(tileset,
-      ()=>{
-        console.log('tiles loaded');
-        this.tileset.loadPixels();
-        let w = round(this.tileset.width / tilesize);
-        let h = round(this.tileset.height / tilesize);
-        this.indexOf = {};
-        let k = 0;
-        //index all the tiles, from top to bottom left to right
-        for (let j = 0; j < h; j++) {
-          for (let i = 0; i < w; i++) {
-            this.indexOf[k] = {
-              x : i,
-              y : j
-            }
-            k++;
-          }
+    this.tileset = tileset;
+    this.tileset.loadPixels();
+    let w = round(this.tileset.width / tilesize);
+    let h = round(this.tileset.height / tilesize);
+    this.indexOf = {};
+    let k = 0;
+    //index all the tiles, from top to bottom left to right
+    for (let j = 0; j < h; j++) {
+      for (let i = 0; i < w; i++) {
+        this.indexOf[k] = {
+          x : i,
+          y : j
         }
-      },
-      ()=>{
-        console.log('tiles failed to load');
-      });
+        k++;
+      }
+    };
   }
   // load the map from the given 2D array
   load(a) {
