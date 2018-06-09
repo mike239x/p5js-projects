@@ -23,6 +23,7 @@ apps just by going to
 Here is the list of some links, I'll try to keep it updated:
 1. [tic-tac-toe](https://mike239x.github.io/p5js-projects/tic-tac-toe/)
 2. [snake](https://mike239x.github.io/p5js-projects/snake/)
+3. [playing with tiles](https://mike239x.github.io/p5js-projects/examples/tilesets)
 3. [flocking sim](https://mike239x.github.io/p5js-projects/flocking/)
 4. [geode-generator](https://mike239x.github.io/p5js-projects/geode-generator)
 5. [sity-landscape-generator](https://mike239x.github.io/p5js-projects/night-city)
