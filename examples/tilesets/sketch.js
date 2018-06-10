@@ -15,10 +15,6 @@ let canvas;
 
 function setup() {
     mytiledmap = new Tilemap(pencil, 64, 10, 7);
-<<<<<<< HEAD
-=======
-
->>>>>>> 976de73f40eea1b395cd0e057014cb288bc3c9a2
 
     mymap = new Map(10,7);
     // mymap.load([
