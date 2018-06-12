@@ -1,0 +1,2 @@
+1. Add graphics that will generate geode, then set alpha to 0 for all white pixels
+(or whatever color i'll choose for the outside).

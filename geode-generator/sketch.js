@@ -5,6 +5,7 @@ let WIDTH, HEIGHT;
 let chooseColor;
 
 function setup () {
+
   WIDTH = windowWidth;
   HEIGHT = windowHeight;
   size = min(WIDTH,HEIGHT)/2 - 100;
