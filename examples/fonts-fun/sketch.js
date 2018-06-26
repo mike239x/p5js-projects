@@ -86,3 +86,55 @@ function draw() {
 
 function keyPressed() {
 }
+
+
+//TODO: check if this works:
+//TODO: doesn't work from the box, since by default
+// textFont() returns "sans-serif" and not a p5.Font object
+// mb I should pass a font object with arguements
+function write_text (t, x, y,  align = 'M', corner = 'none') => {
+  // corners: TL, TR, BL, BR - made out of top, bottom, left and right
+  // no corner for standerd behavior
+  // align: (L)eft, (M)id, or (R)ight
+  //TODO: this line right here causing some troubles:
+  let font = textFont();
+  let lines = t.split("\n");
+  let boxes = [];
+  let l = 0;
+  for (let line of lines) {
+    let b = font.textBounds(line,0,0);
+    if (b.w > l) l = b.w;
+    boxes.push(b);
+  }
+  let n = boxes.length;
+  let container = {
+    x : 0,
+    y : boxes[0].y,
+    w : l,
+    h : (n-1)*textLeading() - boxes[0].y + boxes[n-1].y+boxes[n-1].h
+    // or mb + max(0,boxes[n-1].y+boxes[n-1].h)
+  };
+  for (let b of boxes) {
+    switch (align) {
+      case 'M': b.x = (l - b.w) / 2; break;
+      case 'R': b.x = l - b.w; break;
+      case 'L': default: break;
+    }
+  }
+  let top = container.y;
+  let bot = container.y + container.h;
+  let left = container.x;
+  let right = container.x + container.w;
+  let d = switch(corner) {
+    case 'BR': [right,bot]; break;
+    case 'BL': [left,bot]; break;
+    case 'TR': [right,top]; break;
+    case 'TL': [left,top]; break;
+    default: [0,0]; break;
+  };
+  for (let i = 0; i < n; i++) {
+    text( lines[i],
+      x + boxes[i].x - d[0],
+      y - d[1] + i*textLeading() );
+  }
+};

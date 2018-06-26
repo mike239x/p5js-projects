@@ -1,0 +1,13 @@
+1: add syntax highlighting. Check out this websites:
+http://codemirror.net/
+https://ace.c9.io/
+https://en.wikipedia.org/wiki/Comparison_of_JavaScript-based_source_code_editors
+2: add doc-strings to geoscribble.js, they should look something like that:
+/**
+ * [bar description]
+ * @param  {[type]} foo [description]
+ * @return {[type]}     [description]
+ */
+function bar (foo) {
+    return foo + foo;
+}
