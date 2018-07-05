@@ -2,6 +2,7 @@
 let evo;
 
 let gen = 0;
+let paused = false;
 //TODO refactor using normal names
 
 function preload() {
@@ -9,10 +10,6 @@ function preload() {
   //this one is loaded in index.html
 }
 
-//TODO delete this part
-function mouseClicked() {
-  noLoop();
-}
 
 function setup() {
   let canvas = createCanvas(windowWidth, windowHeight);
@@ -22,12 +19,30 @@ function setup() {
     e.populate(10);
     evo.push(e);
   }
+  // noLoop();
+}
+
+function keyPressed() {
+  if (key == 's' || key == 'S') {
+    // evo[0].makeStep(true);
+    redraw();
+  }
+  if (key == 'p' || key == 'P') {
+    // evo[0].makeStep(true);
+    if (paused) {
+      paused = false;
+      loop();
+    } else {
+      paused = true;
+      noLoop();
+    }
+  }
 }
 
 function draw() {
   background(0);
   strokeWeight(1);
-  stroke(100);
+  stroke(10);
   noFill();
 
   for (let c of curves) {
@@ -39,11 +54,11 @@ function draw() {
     c.draw();
   }
 
-  stroke(255,0,0);
-
-  for (let e of evo) {
-    e.best().draw();
-  }
+  // stroke(255,0,0);
+  //
+  // for (let e of evo) {
+  //   e.best().draw();
+  // }
 
   stroke (255,200,10);
   evo[0].best().draw();
@@ -53,16 +68,25 @@ function draw() {
 
   text(`gen: ${gen}`, 0,20);
   text(`FPS: ${format(frameRate(),0)}`,0,40);
-  let y = 60;
-  for (let e of evo) {
-    text(`${format(e.best().value(),2)}`, 0, y);
-    y += 20;
-  }
+  // let y = 60;
+  // for (let e of evo) {
+  //   text(`${format(e.best().value(),2)}`, 0, y);
+  //   y += 20;
+  // }
   gen++;
 
-  for (let e of evo) {
-    e.makeStep();
+  let y = 60;
+  for (let c of evo[0].population) {
+    text(`${format(c.value(),3)}`, 0, y);
+    y += 20;
   }
+
+
+
+  evo[0].makeStep();
+  // for (let e of evo) {
+  //   e.makeStep();
+  // }
 }
 
 function format(n,d) {
